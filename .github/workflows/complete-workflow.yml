@@ -21,7 +21,7 @@ jobs:
           cache: 'maven'
 
       - name: Build with Maven cloud (MAIN-P)[SAST]
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=yagami-escobar_devsecops-github-actions-all -Dsonar.organization=bcodex1 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=yagami-escobar_devsecops-github-actions-all -Dsonar.organization=bcodex1 -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -50,7 +50,10 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.13.0
         with:
-          docker_name: 'owasp/zap2docker-stable'
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
           target: 'http://testphp.vulnweb.com/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
+
+
+          
